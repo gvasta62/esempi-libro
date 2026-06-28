@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esempi libro — API pubbliche senza chiave</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 40px 20px;
+    }
+    .wrap { max-width: 880px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 36px; }
+    h1 { margin: 0 0 8px; font-size: 2rem; font-weight: 700; }
+    .sub { color: #94a3b8; font-size: 1.05rem; }
+    .badge {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: #16324a;
+      color: #7dd3fc;
+      font-size: .85rem;
+      font-weight: 600;
+    }
+    .griglia {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform .12s ease, border-color .2s ease;
+    }
+    .card:hover { transform: translateY(-3px); border-color: #38bdf8; }
+    .icona { font-size: 1.8rem; }
+    .card h2 { margin: 0; font-size: 1.15rem; font-weight: 600; }
+    .card p { margin: 0; color: #94a3b8; font-size: .92rem; flex: 1; }
+    .servizio { font-size: .8rem; color: #64748b; }
+    .azioni { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+    a.btn {
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: .9rem;
+      font-weight: 600;
+    }
+    a.primario { background: #38bdf8; color: #0f172a; }
+    a.primario:hover { background: #7dd3fc; }
+    a.secondario { background: #334155; color: #e2e8f0; }
+    a.secondario:hover { background: #475569; }
+    .tag-cli {
+      align-self: flex-start;
+      font-size: .75rem;
+      color: #fbbf24;
+      background: #3a2e12;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+    footer { text-align: center; margin-top: 40px; color: #64748b; font-size: .9rem; }
+    footer a { color: #7dd3fc; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Esempi libro</h1>
+      <div class="sub">Mini-esempi che usano API pubbliche gratuite.</div>
+      <span class="badge">Nessuna chiave API richiesta</span>
+    </header>
+
+    <div class="griglia">
+
+      <div class="card">
+        <div class="icona">🗺️</div>
+        <h2>Geocoder mappa</h2>
+        <p>Cerca un indirizzo, mostra latitudine/longitudine su una mappa interattiva e dà il link a Google Maps.</p>
+        <div class="servizio">Nominatim + Leaflet (OpenStreetMap)</div>
+        <div class="azioni">
+          <a class="btn primario" href="geocoder_mappa.html">Apri</a>
+          <a class="btn secondario" href="https://github.com/gvasta62/esempi-libro/blob/main/geocoder_mappa.html" target="_blank" rel="noopener">Codice</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icona">🖼️</div>
+        <h2>Immagine random</h2>
+        <p>Mostra immagini casuali con pulsanti per cambiarle, scaricarle e applicare formato / bianco e nero / sfocatura.</p>
+        <div class="servizio">Lorem Picsum</div>
+        <div class="azioni">
+          <a class="btn primario" href="immagine_random.html">Apri</a>
+          <a class="btn secondario" href="https://github.com/gvasta62/esempi-libro/blob/main/immagine_random.html" target="_blank" rel="noopener">Codice</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icona">⛅</div>
+        <h2>Meteo e previsioni</h2>
+        <p>Meteo attuale e previsione dei prossimi giorni di una città a scelta, da riga di comando.</p>
+        <div class="servizio">Open-Meteo</div>
+        <span class="tag-cli">script Python</span>
+        <div class="azioni">
+          <a class="btn secondario" href="https://github.com/gvasta62/esempi-libro/blob/main/meteo_roma.py" target="_blank" rel="noopener">Codice</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icona">💴</div>
+        <h2>Euro → Yen</h2>
+        <p>Chiede un importo in euro e lo converte in yen giapponesi con il tasso aggiornato.</p>
+        <div class="servizio">ExchangeRate-API</div>
+        <span class="tag-cli">script Python</span>
+        <div class="azioni">
+          <a class="btn secondario" href="https://github.com/gvasta62/esempi-libro/blob/main/euro_to_yen.py" target="_blank" rel="noopener">Codice</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icona">🌐</div>
+        <h2>Traduttore IT → EN</h2>
+        <p>Traduce una frase dall'italiano all'inglese, con fallback automatico su più server pubblici.</p>
+        <div class="servizio">LibreTranslate</div>
+        <span class="tag-cli">script Python</span>
+        <div class="azioni">
+          <a class="btn secondario" href="https://github.com/gvasta62/esempi-libro/blob/main/traduci_it_en.py" target="_blank" rel="noopener">Codice</a>
+        </div>
+      </div>
+
+    </div>
+
+    <footer>
+      Gli esempi <span style="color:#fbbf24">script Python</span> si lanciano in locale (vedi
+      <a href="https://github.com/gvasta62/esempi-libro/blob/main/README.md" target="_blank" rel="noopener">README</a>).
+      &nbsp;·&nbsp; <a href="https://github.com/gvasta62/esempi-libro" target="_blank" rel="noopener">Repository GitHub</a>
+    </footer>
+  </div>
+</body>
+</html>
