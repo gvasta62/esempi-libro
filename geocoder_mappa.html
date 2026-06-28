@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trova indirizzo sulla mappa — Nominatim</title>
+
+  <!-- Leaflet: mappa open-source, nessuna chiave API -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header { padding: 16px 20px; background: #1e293b; }
+    h1 { margin: 0 0 12px; font-size: 1.25rem; font-weight: 600; }
+    form { display: flex; gap: 10px; flex-wrap: wrap; }
+    #indirizzo {
+      flex: 1 1 280px;
+      padding: 10px 14px;
+      font-size: 1rem;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+    button {
+      border: 0;
+      padding: 10px 22px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #0f172a;
+      background: #38bdf8;
+    }
+    button:hover { background: #7dd3fc; }
+    button:disabled { opacity: .6; cursor: progress; }
+    #esito { padding: 12px 20px; font-size: .95rem; min-height: 1.4em; }
+    #esito a { color: #7dd3fc; }
+    .errore { color: #f87171; }
+    #mappa { flex: 1; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Trova un indirizzo sulla mappa</h1>
+    <form id="form">
+      <input id="indirizzo" type="text" placeholder="Es. Colosseo, Roma" autocomplete="off" required>
+      <button id="cerca" type="submit">Cerca</button>
+    </form>
+  </header>
+
+  <div id="esito">Inserisci un indirizzo e premi «Cerca».</div>
+  <div id="mappa"></div>
+
+  <script>
+    const form = document.getElementById('form');
+    const input = document.getElementById('indirizzo');
+    const bottone = document.getElementById('cerca');
+    const esito = document.getElementById('esito');
+
+    // Mappa centrata inizialmente sull'Italia
+    const mappa = L.map('mappa').setView([41.9, 12.5], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors',
+      maxZoom: 19,
+    }).addTo(mappa);
+
+    let marker = null;
+
+    async function geocoder(indirizzo) {
+      // Nominatim (OpenStreetMap): geocoding gratuito, nessuna chiave API
+      const url = 'https://nominatim.openstreetmap.org/search?'
+        + new URLSearchParams({ q: indirizzo, format: 'json', limit: 1, addressdetails: 1 });
+      const risposta = await fetch(url, { headers: { 'Accept-Language': 'it' } });
+      if (!risposta.ok) throw new Error('Servizio non raggiungibile (' + risposta.status + ')');
+      const dati = await risposta.json();
+      if (!dati.length) throw new Error('Indirizzo non trovato.');
+      return dati[0];
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const indirizzo = input.value.trim();
+      if (!indirizzo) return;
+
+      bottone.disabled = true;
+      esito.className = '';
+      esito.textContent = 'Ricerca in corso…';
+
+      try {
+        const r = await geocoder(indirizzo);
+        const lat = parseFloat(r.lat);
+        const lon = parseFloat(r.lon);
+        const gmaps = `https://www.google.com/maps?q=${lat},${lon}`;
+
+        // Sposta la mappa e posiziona il marker
+        mappa.setView([lat, lon], 16);
+        if (marker) marker.remove();
+        marker = L.marker([lat, lon]).addTo(mappa)
+          .bindPopup(`<b>${r.display_name}</b><br>${lat.toFixed(6)}, ${lon.toFixed(6)}`)
+          .openPopup();
+
+        esito.innerHTML =
+          `<b>${r.display_name}</b><br>`
+          + `Latitudine: <code>${lat.toFixed(6)}</code> &nbsp; Longitudine: <code>${lon.toFixed(6)}</code><br>`
+          + `<a href="${gmaps}" target="_blank" rel="noopener">Apri su Google Maps ↗</a>`;
+      } catch (err) {
+        esito.className = 'errore';
+        esito.textContent = 'Errore: ' + err.message;
+      } finally {
+        bottone.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
