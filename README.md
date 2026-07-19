@@ -77,6 +77,27 @@ CARTELLA_DA_ORGANIZZARE = r"C:\Users\tuonome\Desktop"
 
 ---
 
+## Extra — richiede Claude Code
+
+### 7. [`report-settimanali/`](report-settimanali/) — Report settimanali da note grezze
+Scrivi (o detti con **Win + H**) una riga al giorno su cosa hai fatto; a fine settimana
+un'icona trasforma le note in un report professionale in Markdown, con problemi,
+azioni suggerite e piano della settimana successiva.
+
+A differenza degli altri esempi **non è autonomo**: richiede [Claude Code](https://claude.com/claude-code)
+installato, ed è lui a scrivere il report. Su Windows serve anche WSL.
+
+```
+1 - Scrivi note.bat      → annoti la giornata
+2 - Genera report.bat    → esce AAAA-Wnn_report.md
+```
+
+Il [README della cartella](report-settimanali/README.md) racconta anche i due bug
+emersi in collaudo — modello e output sullo stesso file, e il falso "fatto!" quando
+si verifica l'esistenza di un file invece della sua data di modifica.
+
+---
+
 ## Servizi usati (tutti senza chiave API)
 
 | Esempio              | Servizio          | Endpoint                                   |
