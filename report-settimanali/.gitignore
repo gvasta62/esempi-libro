@@ -1,2 +1,4 @@
 # I report generati restano privati: contengono il tuo lavoro reale.
 report_*.md
+report_*.docx
+*.pdf

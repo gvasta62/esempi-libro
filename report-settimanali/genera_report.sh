@@ -98,18 +98,36 @@ NUOVI=$(find "$CARTELLA" -maxdepth 1 -name 'report_*.md' -newer "$MARCATORE" -pr
 rm -f "$MARCATORE"
 
 if [ -n "$NUOVI" ]; then
+  PRIMO=$(echo "$NUOVI" | head -1)
+
+  # --- Conversione in Word ---
+  # Il Markdown resta il formato di lavoro; il .docx e' quello da consegnare.
+  DA_APRIRE="$PRIMO"
+  echo "Converto in Word..."
+  DOCX=$(python3 "$CARTELLA/md_to_docx.py" "$CARTELLA/$PRIMO" 2>&1)
+  if [ $? -eq 0 ] && [ -f "$CARTELLA/$DOCX" ]; then
+    DA_APRIRE="$DOCX"
+  else
+    echo ""
+    echo "   Nota: la conversione in Word non e' riuscita."
+    echo "   $DOCX"
+    echo "   Il report in formato Markdown e' comunque salvato."
+    DOCX=""
+  fi
+
+  echo ""
   echo "=============================================="
   echo "   FATTO! Report salvato:"
-  echo "$NUOVI" | sed 's/^/   /'
+  echo "   $PRIMO"
+  [ -n "$DOCX" ] && echo "   $DOCX"
   echo "=============================================="
   echo ""
-  PRIMO=$(echo "$NUOVI" | head -1)
   read -p "Vuoi aprirlo adesso? (premi INVIO per si, oppure chiudi la finestra) "
-  WINPATH=$(wslpath -w "$CARTELLA/$PRIMO" 2>/dev/null)
+  WINPATH=$(wslpath -w "$CARTELLA/$DA_APRIRE" 2>/dev/null)
   if [ -n "$WINPATH" ]; then
     cmd.exe /c start "" "$WINPATH" 2>/dev/null   # Windows
   else
-    xdg-open "$CARTELLA/$PRIMO" 2>/dev/null      # Linux
+    xdg-open "$CARTELLA/$DA_APRIRE" 2>/dev/null  # Linux
   fi
 else
   echo "=============================================="

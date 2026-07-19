@@ -82,8 +82,8 @@ CARTELLA_DA_ORGANIZZARE = r"C:\Users\tuonome\Desktop"
 ### 7. [`report-settimanali/`](report-settimanali/) — Report di attività da note libere
 Annoti una riga per cosa: quello che hai fatto, con la data, e quello che devi fare,
 con una scadenza o un `asap`. Un'icona trasforma le note in un report professionale
-in Markdown — consuntivo del periodo più scadenzario ordinato per urgenza, con le
-scadenze già scadute in evidenza. Il periodo del report non è fisso: lo ricava dalle
+**in Markdown e in Word** — consuntivo del periodo più scadenzario ordinato per
+urgenza, con le scadenze già scadute in rosso. Il periodo del report non è fisso: lo ricava dalle
 date che hai scritto. Si può anche dettare, con **Win + H**.
 
 ```
@@ -94,7 +94,8 @@ entro 25/07 - consegnare slide budget Q2
 ```
 
 A differenza degli altri esempi **non è autonomo**: richiede [Claude Code](https://claude.com/claude-code)
-installato, ed è lui a scrivere il report. Su Windows serve anche WSL.
+installato, ed è lui a scrivere il report. Su Windows serve anche WSL, e per
+l'uscita in Word `pip install python-docx`.
 
 Il [README della cartella](report-settimanali/README.md) racconta anche i tre punti
 in cui lo script si è rotto in collaudo, incluso il falso "fatto!" che compariva

@@ -2,14 +2,15 @@
 
 Annoti una riga per ogni cosa — quello che hai fatto, con la data, e quello che
 devi fare, con una scadenza o un "asap". Premi un'icona e ottieni un report
-professionale in Markdown: consuntivo di quello che è stato fatto, più uno
-scadenzario ordinato per urgenza con le scadenze scadute in evidenza.
+professionale **in Markdown e in Word**: consuntivo di quello che è stato fatto,
+più uno scadenzario ordinato per urgenza con le scadenze scadute in evidenza.
 
 > **Attenzione: questo esempio è diverso dagli altri del repo.**
 > Gli altri funzionano con la sola libreria standard e senza chiavi API.
 > Questo invece richiede [Claude Code](https://claude.com/claude-code) installato
 > e funzionante, perché è lui a leggere le note e scrivere il report.
 > Su Windows serve anche WSL, perché le icone `.bat` richiamano lo script bash.
+> Per l'uscita in Word serve inoltre `pip install python-docx`.
 
 ---
 
@@ -21,9 +22,45 @@ scrivere: **Win + H** e parli. Salva con **Ctrl + S**.
 
 **Icona `2 - Genera report`**
 Ci mette circa un minuto e salva il report con il nome del periodo davvero
-coperto dalle note, es. `report_2026-07-15_2026-07-30.md`.
+coperto dalle note, in due formati:
+
+```
+report_2026-07-15_2026-07-30.md      formato di lavoro
+report_2026-07-15_2026-07-30.docx    da girare agli altri
+```
+
+Poi apre il Word.
 
 Su Linux/Mac non servono le icone: `bash genera_report.sh`.
+
+### Il documento Word
+
+Titoli veri di Word (quindi riquadro di spostamento e sommario automatico
+funzionano), tabelle con intestazione colorata e bordi, elenchi puntati,
+grassetti — e **le scadenze scadute in rosso**, riga intera.
+
+La conversione la fa `md_to_docx.py` con [python-docx](https://pypi.org/project/python-docx/),
+l'unica dipendenza esterna di questo esempio:
+
+```bash
+pip install python-docx
+```
+
+Non serve avere Word installato, e la conversione non apre nessuna finestra: puoi
+lanciarla mentre stai lavorando. Se fallisce, lo script te lo dice e il Markdown
+resta comunque salvato.
+
+Il convertitore funziona anche da solo, su qualsiasi report già prodotto:
+
+```bash
+python3 md_to_docx.py report_2026-07-15_2026-07-30.md
+python3 md_to_docx.py report.md nome_a_scelta.docx
+```
+
+Non è un convertitore Markdown universale: gestisce titoli, paragrafi, tabelle,
+elenchi, grassetto, corsivo e codice inline — cioè esattamente quello che il
+report usa. È una scelta voluta: meno codice e nessuna sorpresa su costrutti che
+non compariranno mai.
 
 ---
 
@@ -64,9 +101,11 @@ con Bianchi in cima, poi 25/07 e 30/07.
 | `note.txt` | dove scrivi le note |
 | `_modello.md` | il formato di riferimento, **sola lettura**: è la traccia che ogni report segue |
 | `genera_report.sh` | il motore |
+| `md_to_docx.py` | converte il report in Word (richiede `python-docx`) |
 | `1 - Scrivi note.bat` | apre le note (Windows) |
 | `2 - Genera report.bat` | lancia la generazione (Windows) |
-| `report_AAAA-MM-GG_AAAA-MM-GG.md` | i report prodotti |
+| `report_AAAA-MM-GG_AAAA-MM-GG.md` | i report prodotti (formato di lavoro) |
+| `report_AAAA-MM-GG_AAAA-MM-GG.docx` | gli stessi report in Word |
 
 Non ci sono percorsi fissi: lo script lavora nella cartella in cui si trova.
 Le icone `.bat` devono restare lì dentro; se le vuoi sul Desktop, creane un
@@ -125,7 +164,7 @@ Riga povera:  16/07 - riunione e problemi vari.
 I report contengono cose del tuo lavoro. Restano sul tuo computer: qui trovi solo
 lo strumento e un `_modello.md` con contenuti inventati.
 
-Il `.gitignore` esclude già i report generati (`report_*.md`). Il file `note.txt`
+Il `.gitignore` esclude già i report generati (`report_*.md`, `report_*.docx`, `*.pdf`). Il file `note.txt`
 è invece incluso perché è il modulo vuoto da compilare: se lavori direttamente in
 questa cartella e la tieni sotto Git, aggiungilo tu al `.gitignore` una volta che
 contiene note vere.
