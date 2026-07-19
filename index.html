@@ -68,6 +68,16 @@
       padding: 2px 8px;
       border-radius: 6px;
     }
+    .tag-claude {
+      align-self: flex-start;
+      font-size: .75rem;
+      color: #c4b5fd;
+      background: #2e2748;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+    .card.extra { border-color: #4c3f7a; }
+    .card.extra:hover { border-color: #a78bfa; }
     footer { text-align: center; margin-top: 40px; color: #64748b; font-size: .9rem; }
     footer a { color: #7dd3fc; }
   </style>
@@ -148,11 +158,24 @@
         </div>
       </div>
 
+      <div class="card extra">
+        <div class="icona">📝</div>
+        <h2>Report da note libere</h2>
+        <p>Annoti una riga per cosa — <em>15/07 fatto X</em>, <em>asap Y</em>, <em>entro il 25/07 Z</em> — e ottieni un report con il consuntivo del periodo e lo scadenzario ordinato per urgenza.</p>
+        <div class="servizio">Nessun servizio online — richiede Claude Code</div>
+        <span class="tag-claude">non autonomo</span>
+        <div class="azioni">
+          <a class="btn secondario" href="https://github.com/gvasta62/esempi-libro/tree/main/report-settimanali" target="_blank" rel="noopener">Codice</a>
+        </div>
+      </div>
+
     </div>
 
     <footer>
       Gli esempi <span style="color:#fbbf24">script Python</span> si lanciano in locale (vedi
       <a href="https://github.com/gvasta62/esempi-libro/blob/main/README.md" target="_blank" rel="noopener">README</a>).
+      Quello <span style="color:#c4b5fd">non autonomo</span> richiede
+      <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a> installato.
       &nbsp;·&nbsp; <a href="https://github.com/gvasta62/esempi-libro" target="_blank" rel="noopener">Repository GitHub</a>
     </footer>
   </div>
