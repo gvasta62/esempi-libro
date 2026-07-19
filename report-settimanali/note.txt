@@ -1,0 +1,28 @@
+# ============================================================
+#  LE MIE NOTE
+#  Una riga per ogni cosa. Scrivi come ti viene.
+#
+#  COME INIZIARE LA RIGA:
+#
+#    15/07          cosa FATTA quel giorno
+#    oggi / ieri    cosa FATTA (le calcolo io)
+#
+#    entro 25/07    cosa DA FARE con scadenza
+#    entro venerdi  va bene anche cosi
+#    asap           da fare il prima possibile
+#    30/07          se e' una data futura, la tratto come da fare
+#
+#  Le righe che iniziano con # sono ignorate: puoi cancellare
+#  tutte queste istruzioni se ti danno fastidio.
+#
+#  ESEMPI:
+#    15/07 - finita presentazione cliente ABC
+#    ieri - call Teams, gestionale in crash, 2h perse
+#    asap - richiamare fornitore Bianchi
+#    entro 25/07 - consegnare slide budget Q2
+#
+#  Piu' sei concreto (numeri, esito, tempo perso e perche'),
+#  migliore sara' il report.
+# ============================================================
+
+

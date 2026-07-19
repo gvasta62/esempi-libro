@@ -1,20 +1,21 @@
 #!/bin/bash
-# Genera il report settimanale a partire da note-settimana.txt
+# Genera un report di attivita' a partire dalle note libere in note.txt
 # Lanciato dall'icona "2 - Genera report.bat".
 #
-# Non contiene percorsi fissi: lavora sempre nella cartella in cui si trova,
-# quindi puoi spostare l'intera cartella dove preferisci.
+# Il periodo coperto NON e' deciso qui: dipende dalle date che hai scritto
+# nelle note. Il nome del file lo compone il generatore.
 
 CARTELLA=$(cd "$(dirname "$0")" && pwd)
-NOTE="$CARTELLA/note-settimana.txt"
-SETTIMANA=$(date +%G-W%V)          # es. 2026-W29
-REPORT="$CARTELLA/${SETTIMANA}_report.md"
+NOTE="$CARTELLA/note.txt"
+OGGI=$(date +%d/%m/%Y)
+OGGI_ESTESO=$(date +"%A %d %B %Y")
 
 cd "$CARTELLA" || exit 1
 
 echo ""
 echo "=============================================="
-echo "   GENERAZIONE REPORT SETTIMANALE $SETTIMANA"
+echo "   GENERAZIONE REPORT ATTIVITA'"
+echo "   Oggi e' $OGGI_ESTESO"
 echo "=============================================="
 echo ""
 
@@ -28,70 +29,94 @@ if [ ! -f "$NOTE" ]; then
   exit 1
 fi
 
-# --- Controllo 2: le note sono state compilate? ---
-# Conta le righe che hanno del testo dopo il trattino.
-RIGHE_PIENE=$(grep -cE '^(Lunedi|Martedi|Mercoledi|Giovedi|Venerdi) *- *[^ ]' "$NOTE")
+# --- Controllo 2: ci sono note vere? ---
+# Conta le righe non vuote che non sono commenti (#).
+RIGHE_PIENE=$(grep -vE '^[[:space:]]*(#|$)' "$NOTE" | wc -l)
 if [ "$RIGHE_PIENE" -eq 0 ]; then
-  echo "Il file delle note sembra ancora vuoto."
-  echo "Apri '1 - Scrivi note' e annota almeno una giornata."
+  echo "Il file delle note non contiene ancora nulla."
+  echo "Apri '1 - Scrivi note' e annota almeno una riga."
   echo "(ricorda di salvare con Ctrl+S prima di chiudere)"
   echo ""
   read -p "Premi INVIO per chiudere..."
   exit 1
 fi
 
-echo "Trovate $RIGHE_PIENE giornate compilate. Genero il report..."
+echo "Trovate $RIGHE_PIENE note. Genero il report..."
 echo "(ci vuole circa un minuto, non chiudere questa finestra)"
 echo ""
 
-# Segnatempo: serve dopo per capire se il report e' stato scritto DAVVERO adesso
-# e non e' semplicemente un file vecchio rimasto dalla volta scorsa.
+# Segnatempo: serve dopo per riconoscere i report scritti DAVVERO adesso.
 MARCATORE=$(mktemp)
 
 # --- Generazione ---
-claude --permission-mode acceptEdits -p "Leggi il file note-settimana.txt in questa cartella.
-Trasforma quelle note grezze in un report settimanale professionale, usando
-ESATTAMENTE la stessa struttura e lo stesso tono del file _modello.md
-che trovi nella stessa cartella (usalo come modello di riferimento, in sola
-lettura: non modificarlo mai).
+# Nota: il nome del file di destinazione lo decide il generatore, perche'
+# dipende dalle date presenti nelle note. Per questo dopo non cerchiamo un
+# nome preciso, ma "qualsiasi report piu' recente del marcatore".
+claude --permission-mode acceptEdits -p "Oggi e' $OGGI (giorno/mese/anno). Usa questa data per
+risolvere i riferimenti relativi come 'oggi', 'ieri', 'venerdi', 'entro fine mese'.
 
-Sezioni obbligatorie:
-- Riepilogo della settimana (2-3 frasi)
-- Attivita completate (tabella per giorno)
+Leggi il file note.txt in questa cartella. Contiene note libere, una per riga.
+Ignora le righe che iniziano con #.
+
+Ogni riga puo' essere:
+- una attivita' GIA' SVOLTA, se ha una data passata o dice oggi/ieri
+- una attivita' DA FARE, se dice 'asap' / 'il prima possibile', oppure
+  'entro <data>', oppure ha una data futura
+
+Interpreta le date con flessibilita': 15/07, 15-07, 15 luglio, lunedi, venerdi
+prossimo, fine mese. Se una riga non ha nessun riferimento temporale e non e'
+chiaramente conclusa, trattala come da fare senza scadenza.
+
+Scrivi un report professionale con la stessa struttura e lo stesso tono del file
+_modello.md di questa cartella (usalo come riferimento, in SOLA LETTURA: non
+modificarlo mai). Struttura richiesta:
+
+- Titolo con il periodo effettivamente coperto dalle note
+- Riepilogo del periodo (2-3 frasi)
+- Attivita' svolte (tabella ordinata per data crescente)
 - Obiettivi raggiunti
 - Problemi e soluzioni (con azione suggerita per ciascuno)
-- Piano prossima settimana (tabella con priorita)
+- Da fare (tabella ordinata per urgenza: prima 'il prima possibile',
+  poi le scadenze dalla piu' vicina alla piu' lontana; segnala in modo
+  evidente le scadenze gia' scadute o a rischio)
 - Note per il manager
 
 Tono professionale ma accessibile. Evidenzia successi e aree di miglioramento.
-Salva il risultato nel file ${SETTIMANA}_report.md in questa cartella.
-Non modificare nessun altro file. Alla fine rispondi solo con: REPORT SALVATO"
+
+SALVATAGGIO: calcola la data piu' antica e la piu' recente presenti nelle note
+(considerando sia le attivita' svolte sia le scadenze) e salva il report in un
+file chiamato esattamente:
+   report_AAAA-MM-GG_AAAA-MM-GG.md
+dove la prima data e' la piu' antica e la seconda la piu' recente.
+Esempio: report_2026-07-15_2026-07-30.md
+Non modificare nessun altro file. Alla fine rispondi solo con il nome del file salvato."
 
 # --- Esito ---
-# Non basta che il file esista: potrebbe essere quello della volta scorsa.
-# Controllo che sia stato modificato DOPO l'avvio di questa generazione.
+# Cerchiamo qualsiasi report creato o modificato dopo il marcatore.
 echo ""
-if [ -f "$REPORT" ] && [ "$REPORT" -nt "$MARCATORE" ]; then
-  rm -f "$MARCATORE"
+NUOVI=$(find "$CARTELLA" -maxdepth 1 -name 'report_*.md' -newer "$MARCATORE" -printf '%f\n' 2>/dev/null)
+rm -f "$MARCATORE"
+
+if [ -n "$NUOVI" ]; then
   echo "=============================================="
-  echo "   FATTO! Report salvato in:"
-  echo "   ${SETTIMANA}_report.md"
+  echo "   FATTO! Report salvato:"
+  echo "$NUOVI" | sed 's/^/   /'
   echo "=============================================="
   echo ""
+  PRIMO=$(echo "$NUOVI" | head -1)
   read -p "Vuoi aprirlo adesso? (premi INVIO per si, oppure chiudi la finestra) "
-  WINPATH=$(wslpath -w "$REPORT" 2>/dev/null)
+  WINPATH=$(wslpath -w "$CARTELLA/$PRIMO" 2>/dev/null)
   if [ -n "$WINPATH" ]; then
     cmd.exe /c start "" "$WINPATH" 2>/dev/null   # Windows
   else
-    xdg-open "$REPORT" 2>/dev/null               # Linux
+    xdg-open "$CARTELLA/$PRIMO" 2>/dev/null      # Linux
   fi
 else
-  rm -f "$MARCATORE"
   echo "=============================================="
   echo "   ATTENZIONE: il report NON e' stato scritto."
   echo "=============================================="
   echo ""
-  echo "Nessun file nuovo e' stato salvato per la settimana $SETTIMANA."
+  echo "Nessun file report_*.md nuovo in questa cartella."
   echo "Leggi i messaggi qui sopra: spiegano il motivo."
   echo ""
   read -p "Premi INVIO per chiudere..."

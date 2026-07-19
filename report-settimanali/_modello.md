@@ -1,60 +1,56 @@
 <!-- FILE DI RIFERIMENTO - SOLA LETTURA
-     Serve a mostrare al generatore che struttura e che tono deve avere il report.
+     Mostra al generatore che struttura e che tono deve avere il report.
      I contenuti qui sotto sono inventati, a puro scopo di esempio.
      Non modificare questo file: e' la traccia che ogni report seguira'. -->
 
-# Report Settimanale — Settimana 29 (13–17 luglio 2026)
+# Report attività — dal 15/07/2026 al 30/07/2026
 
-## Riepilogo della settimana
+## Riepilogo del periodo
 
-Settimana equilibrata tra consegne al cliente, pianificazione interna e attività di supporto. Sono stati completati tutti i deliverable previsti (presentazione cliente ABC, slide budget Q2, 3 ticket chiusi) e dedicato tempo alla crescita professionale con un corso Excel. L'unico ostacolo rilevante è stato un malfunzionamento del software gestionale, che ha assorbito circa due ore non pianificate.
+Periodo che combina la chiusura di alcune consegne al cliente e l'apertura di un nuovo ciclo di lavoro. Le attività completate sono concentrate nella prima settimana, mentre restano aperti cinque impegni, di cui uno già in ritardo. L'ostacolo più rilevante è stato un malfunzionamento del software gestionale, che ha assorbito circa due ore non pianificate.
 
-## Attività completate
+## Attività svolte
 
-| Giorno | Attività | Esito |
+| Data | Attività | Esito |
 |---|---|---|
-| Lunedì | Finalizzazione presentazione per il cliente ABC | Completata |
-| Martedì | Call Teams: kick-off nuovo progetto | Completata |
-| Martedì | Gestione malfunzionamento software gestionale | Risolto (~2h impreviste) |
-| Mercoledì | Formazione online su Excel | Completata |
-| Giovedì | Meeting budget Q2 + preparazione slide | Completata |
-| Venerdì | Chiusura di 3 ticket di supporto | Completata |
-| Venerdì | Avvio documentazione del nuovo processo | In corso |
+| 15/07 | Finalizzazione presentazione per il cliente ABC | Completata |
+| 16/07 | Call Teams: kick-off nuovo progetto | Completata |
+| 16/07 | Gestione malfunzionamento software gestionale | Risolto (~2h impreviste) |
+| 17/07 | Formazione online su Excel | Completata |
+| 18/07 | Chiusura di 3 ticket di supporto | Completata |
 
 ## Obiettivi raggiunti
 
 - **Consegna al cliente ABC**: presentazione completata nei tempi previsti.
 - **Avvio nuovo progetto**: allineamento fatto, prossimi passi condivisi con il team.
-- **Contributo al ciclo budget Q2**: materiale di supporto pronto per il meeting.
 - **Supporto**: 3 ticket chiusi, backlog ridotto.
-- **Sviluppo competenze**: formazione Excel completata, applicabile subito alle attività di reporting.
+- **Sviluppo competenze**: formazione Excel completata, applicabile subito al reporting.
 
 ## Problemi e soluzioni
 
-**Problema — Malfunzionamento del software gestionale (martedì)**
+**Problema — Malfunzionamento del software gestionale (16/07)**
 Circa due ore perse per un blocco non previsto.
 *Azione suggerita:* segnalare formalmente il problema all'IT con ticket tracciato, così che l'impatto sia visibile e l'eventuale ricorrenza documentata. Nel frattempo, definire un piano B per le attività dipendenti dal gestionale.
 
-**Problema — Percezione di gestione del tempo migliorabile**
-*Azione suggerita:* introdurre due abitudini leggere:
-1. **Time-boxing**: assegnare in agenda un blocco fisso alle attività ricorrenti.
-2. **Tracciamento rapido**: annotare inizio/fine delle attività per una settimana, così da avere dati reali invece di sensazioni.
+**Problema — Concentrazione di scadenze a fine mese**
+Tre impegni cadono nell'arco di quattro giorni.
+*Azione suggerita:* anticipare quello meno vincolato da terzi, per ridurre il rischio di accavallamento.
 
-**Problema — Documentazione del nuovo processo avviata ma non conclusa**
-*Azione suggerita:* fissare uno slot dedicato lunedì mattina, quando l'attenzione è più alta, con un obiettivo concreto ("prima bozza entro martedì").
+## Da fare
 
-## Piano prossima settimana
+Ordinate per urgenza: prima quelle da sbrigare subito, poi le scadenze dalla più vicina alla più lontana.
 
-| Priorità | Attività | Obiettivo |
-|---|---|---|
-| Alta | Completare la documentazione del nuovo processo | Bozza rivedibile entro mercoledì |
-| Alta | Follow-up cliente ABC dopo la presentazione | Raccogliere feedback e definire i prossimi passi |
-| Media | Avviare i task operativi del nuovo progetto | Piano di lavoro condiviso |
-| Media | Segnalare/monitorare il problema del gestionale | Ticket aperto e tracciato |
-| Bassa | Applicare le competenze Excel al reporting | Automatizzare almeno un report ricorrente |
+| Quando | Attività | Priorità | Note |
+|---|---|---|---|
+| **In ritardo — era il 18/07** | Inviare consuntivo costi al controllo di gestione | Critica | Scaduta da 1 giorno, recuperare oggi |
+| Il prima possibile | Richiamare il fornitore Bianchi | Alta | Blocca la revisione del contratto |
+| Entro il 25/07 | Consegnare le slide budget Q2 | Alta | Materiale già impostato |
+| 28/07 | Documentazione del nuovo processo | Media | Bozza da completare |
+| 30/07 | Visita al deposito | Media | Da confermare con il referente |
 
 ## Note per il manager
 
-- La presentazione ABC e le slide Q2 sono state consegnate nei tempi previsti.
-- **Punto di attenzione**: l'instabilità del software gestionale ha causato circa 2 ore di lavoro perse in una sola giornata. Se il problema è ricorrente anche per altri colleghi, vale la pena quantificarne l'impatto complessivo.
-- La formazione Excel avrà ricadute concrete sulle attività di reporting e budget.
+- La presentazione ABC è stata consegnata nei tempi previsti.
+- **Punto di attenzione**: il consuntivo costi è in ritardo di un giorno; il recupero è previsto in giornata.
+- **Punto di attenzione**: l'instabilità del gestionale ha causato circa 2 ore di lavoro perse. Se il problema è ricorrente anche per altri colleghi, vale la pena quantificarne l'impatto complessivo.
+- Nella settimana dal 25/07 si concentrano tre scadenze: segnalo il rischio di sovrapposizione.
