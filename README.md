@@ -1,6 +1,7 @@
 # Esempi libro
 
-Raccolta di mini-esempi che usano **API pubbliche gratuite, senza chiave API**.
+Raccolta di mini-esempi che usano **API pubbliche gratuite, senza chiave API**,
+più qualche esempio che funziona **completamente offline**.
 Ogni esempio è autonomo: gli script Python usano solo la libreria standard (zero dipendenze
 da installare), le pagine HTML si aprono direttamente nel browser.
 
@@ -8,7 +9,8 @@ da installare), le pagine HTML si aprono direttamente nel browser.
 
 - **Script Python (`.py`)**: Python 3 (qualsiasi versione recente). Nessun `pip install`.
 - **Pagine HTML (`.html`)**: un browser. Doppio clic sul file (alcuni caricano librerie da CDN, quindi serve la connessione a internet).
-- Connessione a internet per tutti (interrogano servizi online).
+- Connessione a internet per quasi tutti (interrogano servizi online). Fa eccezione
+  `organizza_download.py`, che lavora solo sui file del tuo computer.
 
 ---
 
@@ -55,6 +57,24 @@ su una mappa interattiva (**Leaflet**) e fornisce un link a **Google Maps**.
 Apri geocoder_mappa.html nel browser (doppio clic).
 ```
 
+### 6. `organizza_download.py` — Riordina la cartella Download
+Smista i file della cartella Download in sottocartelle per tipo (Immagini, Documenti, Video,
+Audio, PCCAN, Archivi, Altri). **Non usa nessun servizio online**: lavora solo sui file locali.
+
+Mostra sempre un'anteprima e chiede conferma prima di spostare qualcosa; non sovrascrive mai
+un file esistente (rinomina in `nome (1).ext`) e scrive un log di tutti gli spostamenti.
+
+```bash
+python3 organizza_download.py     # su Windows: python organizza_download.py
+# mostra l'anteprima, poi scrivi SI per confermare
+```
+
+Per usarlo su un'altra cartella, modifica `CARTELLA_DA_ORGANIZZARE` in cima al file:
+
+```python
+CARTELLA_DA_ORGANIZZARE = r"C:\Users\tuonome\Desktop"
+```
+
 ---
 
 ## Servizi usati (tutti senza chiave API)
@@ -66,5 +86,6 @@ Apri geocoder_mappa.html nel browser (doppio clic).
 | traduci_it_en.py     | LibreTranslate    | istanze pubbliche (con fallback)            |
 | immagine_random.html | Lorem Picsum      | `picsum.photos`                             |
 | geocoder_mappa.html  | Nominatim + Leaflet | `nominatim.openstreetmap.org`, OSM tiles  |
+| organizza_download.py | nessuno          | funziona offline, solo file locali          |
 
 > Nota: gli esempi dipendono da servizi pubblici di terze parti; la disponibilità non è garantita.
